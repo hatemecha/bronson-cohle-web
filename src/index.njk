@@ -1,25 +1,25 @@
 ---
 layout: layouts/base.njk
 title: "Textos"
-description: "Textos de Bronson-Cohle."
+description: "Textos personales."
 permalink: /
 ---
 
-<div class="home reading">
-  <header class="home-header">
-    <p class="home-intro">Textos de Bronson-Cohle.<br>{{ site.year }}—</p>
-  </header>
-
-  <div class="home-list">
+<div class="home">
+  <div class="home-table">
+    <div class="home-year-row">
+      <p class="home-year">{{ site.year }}</p>
+    </div>
     {% for item in collections.textos %}
-    <article class="home-item">
-      {% if not loop.first %}<hr class="rule">{% endif %}
-      <p class="meta-line">
+    <article class="home-row">
+      <div class="home-meta">
         <span class="meta-id">{{ item.data.id }}</span>
-        <time class="meta-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateHome }}</time>
-      </p>
-      <h2 class="home-item-title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
-      <p class="home-item-excerpt">{{ item.templateContent | excerpt }}</p>
+        <time class="meta-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
+      </div>
+      <div class="home-content">
+        <h2 class="home-item-title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+        <p class="home-item-excerpt">{{ item.templateContent | excerpt }}</p>
+      </div>
     </article>
     {% endfor %}
   </div>

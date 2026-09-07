@@ -3,7 +3,9 @@
 
   var THEME_KEY = "bc-theme";
   var FONT_KEY = "bc-font-size";
+  var READING_KEY = "bc-reading";
   var root = document.documentElement;
+  var panelOpen = false;
 
   function getTheme() {
     return root.getAttribute("data-theme") === "light" ? "light" : "dark";
@@ -14,13 +16,12 @@
     try {
       localStorage.setItem(THEME_KEY, theme);
     } catch (e) {}
-    updateThemeLabel();
-  }
-
-  function updateThemeLabel() {
-    var label = document.querySelector("[data-theme-label]");
-    if (!label) return;
-    label.textContent = getTheme() === "dark" ? "Claro / Oscuro" : "Oscuro / Claro";
+    document.querySelectorAll(".theme-control").forEach(function (btn) {
+      btn.classList.toggle(
+        "is-active",
+        btn.getAttribute("data-theme") === theme
+      );
+    });
   }
 
   function setFontSize(size) {
@@ -33,10 +34,42 @@
     });
   }
 
-  function initReadingControls() {
+  function setReading(on) {
+    if (on) {
+      root.setAttribute("data-reading", "on");
+    } else {
+      root.removeAttribute("data-reading");
+    }
+    try {
+      localStorage.setItem(READING_KEY, on ? "on" : "off");
+    } catch (e) {}
+    var btn = document.querySelector(".reading-control");
+    if (btn) btn.classList.toggle("is-active", on);
+  }
+
+  function closePanel() {
+    var panel = document.getElementById("a11y-panel");
+    var toggle = document.querySelector(".a11y-toggle");
+    if (!panel || !toggle) return;
+    panel.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+    panelOpen = false;
+  }
+
+  function togglePanel() {
+    var panel = document.getElementById("a11y-panel");
+    var toggle = document.querySelector(".a11y-toggle");
+    if (!panel || !toggle) return;
+    panelOpen = !panelOpen;
+    panel.hidden = !panelOpen;
+    toggle.setAttribute("aria-expanded", panelOpen ? "true" : "false");
+  }
+
+  function initA11y() {
     var currentSize = root.getAttribute("data-font-size") || "base";
     setFontSize(currentSize);
-    updateThemeLabel();
+    setTheme(getTheme());
+    setReading(root.getAttribute("data-reading") === "on");
 
     document.querySelectorAll(".font-control").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -44,12 +77,48 @@
       });
     });
 
-    var themeBtn = document.querySelector(".theme-control");
-    if (themeBtn) {
-      themeBtn.addEventListener("click", function () {
-        setTheme(getTheme() === "dark" ? "light" : "dark");
+    document.querySelectorAll(".theme-control").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setTheme(btn.getAttribute("data-theme"));
+      });
+    });
+
+    var readingBtn = document.querySelector(".reading-control");
+    if (readingBtn) {
+      readingBtn.addEventListener("click", function () {
+        var on = root.getAttribute("data-reading") !== "on";
+        if (on) {
+          setTheme("light");
+          setFontSize("lg");
+        }
+        setReading(on);
       });
     }
+
+    var panel = document.getElementById("a11y-panel");
+    if (panel) {
+      panel.addEventListener("click", function (e) {
+        if (e.target.closest(".text-button")) closePanel();
+      });
+    }
+
+    var toggle = document.querySelector(".a11y-toggle");
+    if (toggle) {
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        togglePanel();
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!panelOpen) return;
+      if (e.target.closest(".a11y")) return;
+      closePanel();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closePanel();
+    });
   }
 
   function initShare() {
@@ -251,7 +320,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    initReadingControls();
+    initA11y();
     initShare();
     initArchiveSort();
     initAzar();

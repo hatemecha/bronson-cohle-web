@@ -23,9 +23,14 @@ function dateParts(value) {
 }
 
 export default function (eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("css");
-  eleventyConfig.addPassthroughCopy("js");
-  eleventyConfig.addPassthroughCopy("fonts");
+  eleventyConfig.addPassthroughCopy({
+    "src/css": "css",
+    "src/js": "js",
+    "src/fonts": "fonts",
+  });
+  eleventyConfig.setServerPassthroughCopyBehavior("copy");
+  eleventyConfig.addWatchTarget("src/css/");
+  eleventyConfig.addWatchTarget("src/js/");
 
   eleventyConfig.addCollection("textos", (collectionApi) => {
     return collectionApi
@@ -121,7 +126,7 @@ export default function (eleventyConfig) {
     try {
       execSync("npx pagefind --site dist", { stdio: "inherit" });
     } catch {
-      console.warn("[pagefind] Index skipped — run npm run build after first compile.");
+      console.warn("[pagefind] Index skipped - run npm run build after first compile.");
     }
   });
 

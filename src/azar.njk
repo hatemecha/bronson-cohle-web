@@ -5,8 +5,8 @@ description: "Un texto al azar."
 permalink: /azar/
 ---
 
-<div class="azar reading" data-azar-urls='[{% for item in collections.textos %}"{{ item.url }}"{% if not loop.last %},{% endif %}{% endfor %}]'>
-  <header class="page-header">
+<div class="azar" data-azar-urls='[{% for item in collections.textos %}"{{ item.url }}"{% if not loop.last %},{% endif %}{% endfor %}]'>
+  <header class="page-header page-header-ruled">
     <h1 class="page-title">Azar</h1>
     <p class="page-lead" id="azar-status">Elegiendo un texto…</p>
   </header>

@@ -1,10 +1,30 @@
-<div class="reading-controls" aria-label="Preferencias de lectura">
-  <span class="controls-group">
-    <button type="button" class="text-button font-control" data-font="sm" aria-label="Texto más pequeño">A−</button>
-    <button type="button" class="text-button font-control" data-font="base" aria-label="Texto normal">A</button>
-    <button type="button" class="text-button font-control" data-font="lg" aria-label="Texto más grande">A+</button>
-  </span>
-  <button type="button" class="text-button theme-control" aria-label="Cambiar tema claro u oscuro">
-    <span data-theme-label>Claro / Oscuro</span>
-  </button>
+<div class="a11y">
+  <button
+    type="button"
+    class="a11y-toggle text-button"
+    aria-expanded="false"
+    aria-controls="a11y-panel"
+    aria-label="Opciones de lectura"
+  >Aa</button>
+  <div class="a11y-panel" id="a11y-panel" hidden>
+    <div class="a11y-group">
+      <span class="a11y-label">Texto</span>
+      <div class="a11y-options">
+        <button type="button" class="text-button font-control" data-font="sm">A-</button>
+        <button type="button" class="text-button font-control" data-font="base">A</button>
+        <button type="button" class="text-button font-control" data-font="lg">A+</button>
+        <button type="button" class="text-button font-control" data-font="xl">A++</button>
+      </div>
+    </div>
+    <div class="a11y-group">
+      <span class="a11y-label">Tema</span>
+      <div class="a11y-options">
+        <button type="button" class="text-button theme-control" data-theme="dark">Oscuro</button>
+        <button type="button" class="text-button theme-control" data-theme="light">Claro</button>
+      </div>
+    </div>
+    <div class="a11y-group a11y-group-full">
+      <button type="button" class="text-button reading-control">Modo lectura</button>
+    </div>
+  </div>
 </div>

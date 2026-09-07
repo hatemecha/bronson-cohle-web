@@ -1,6 +1,6 @@
-# Bronson—Cohle
+# Bronson Cohle
 
-Archivo anónimo de textos personales, escrito por un amigo y desarrollado por mí. Sitio estático con Eleventy.
+Textos personales. Sitio estático con Eleventy.
 
 ## Requisitos
 
@@ -26,10 +26,3 @@ Genera el sitio en `dist/` e indexa el contenido con Pagefind.
 ## URL base
 
 Editá `src/_data/site.json` y cambiá `url` antes de publicar (canonical, RSS, Open Graph).
-
-## Estructura
-
-- `src/textos/` — textos en Markdown
-- `src/_includes/` — layouts Nunjucks
-- `src/css/` — estilos
-- `src/js/` — JavaScript mínimo

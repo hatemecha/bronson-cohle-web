@@ -1,6 +1,6 @@
 {% set pageTitle = title | default(site.name) %}
 {% set pageDescription = description | default(site.description) %}
-{% set canonicalUrl = page.url | url | absoluteUrl(site.url) %}
+{% set canonicalUrl = page.url | absoluteUrl(site.url) %}
 
 <title>{% if title and page.url != "/" %}{{ title }} - {% endif %}{{ site.name }}</title>
 <meta name="description" content="{{ pageDescription }}">

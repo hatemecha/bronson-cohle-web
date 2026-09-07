@@ -1,5 +1,7 @@
 import { execSync } from "node:child_process";
 
+const pathPrefix = process.env.PATH_PREFIX || "/";
+
 const MONTHS_ES = [
   "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
   "JUL", "AGO", "SEP", "OCT", "NOV", "DIC",
@@ -27,10 +29,15 @@ export default function (eleventyConfig) {
     "src/css": "css",
     "src/js": "js",
     "src/fonts": "fonts",
+    "src/.nojekyll": ".nojekyll",
   });
   eleventyConfig.setServerPassthroughCopyBehavior("copy");
   eleventyConfig.addWatchTarget("src/css/");
   eleventyConfig.addWatchTarget("src/js/");
+
+  eleventyConfig.on("eleventy.after", () => {
+    execSync("npx pagefind --site dist", { stdio: "inherit" });
+  });
 
   eleventyConfig.addCollection("textos", (collectionApi) => {
     return collectionApi
@@ -70,6 +77,16 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("yearOf", (value) => {
     return dateParts(value).year;
+  });
+
+  eleventyConfig.addFilter("monthKey", (value) => {
+    const { month, year } = dateParts(value);
+    return `${year}-${pad(month + 1)}`;
+  });
+
+  eleventyConfig.addFilter("formatMonthLabel", (value) => {
+    const { month } = dateParts(value);
+    return MONTHS_ES[month];
   });
 
   eleventyConfig.addFilter("stripHtml", (value) => {
@@ -122,14 +139,6 @@ export default function (eleventyConfig) {
       .replace(/"/g, "&quot;");
   });
 
-  eleventyConfig.on("eleventy.after", () => {
-    try {
-      execSync("npx pagefind --site dist", { stdio: "inherit" });
-    } catch {
-      console.warn("[pagefind] Index skipped - run npm run build after first compile.");
-    }
-  });
-
   return {
     dir: {
       input: "src",
@@ -140,6 +149,6 @@ export default function (eleventyConfig) {
     templateFormats: ["md", "njk", "html", "xml"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
-    pathPrefix: "/",
+    pathPrefix,
   };
 }

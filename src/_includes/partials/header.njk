@@ -1,10 +1,10 @@
-<header class="site-header" data-pagefind-ignore>
+<header class="site-header noise-surface" data-pagefind-ignore>
   <div class="site-shell site-header-inner">
-    <a class="site-name" href="/">{{ site.name }}</a>
+    <a class="site-name" href="{{ '/' | url }}">{{ site.name }}</a>
     <nav class="site-nav" aria-label="Principal">
-      <a href="/archivo/"{% if page.url == "/archivo/" %} aria-current="page"{% endif %}>Archivo</a>
-      <a href="/azar/"{% if page.url == "/azar/" %} aria-current="page"{% endif %}>Azar</a>
-      <a href="/buscar/"{% if page.url == "/buscar/" %} aria-current="page"{% endif %}>Buscar</a>
+      <a href="{{ '/archivo/' | url }}"{% if page.url == "/archivo/" %} aria-current="page"{% endif %}>Archivo</a>
+      <a href="{{ '/azar/' | url }}"{% if page.url == "/azar/" %} aria-current="page"{% endif %}>Azar</a>
+      <a href="{{ '/buscar/' | url }}"{% if page.url == "/buscar/" %} aria-current="page"{% endif %}>Buscar</a>
     </nav>
     {% include "partials/reading-controls.njk" %}
   </div>

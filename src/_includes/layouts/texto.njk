@@ -19,7 +19,7 @@ layout: layouts/base.njk
 
     <footer class="texto-footer">
       <p class="share-line">
-        <button type="button" class="text-button share-button" data-share="{{ page.url | url | absoluteUrl(site.url) }}">compartir</button>
+        <button type="button" class="text-button share-button" data-share="{{ page.url | absoluteUrl(site.url) }}">compartir</button>
       </p>
 
       {% set relatedItems = related | resolveRelated(collections) %}
@@ -29,7 +29,7 @@ layout: layouts/base.njk
         <h2 id="otros-textos" class="section-label">Otros textos</h2>
         <ul class="related-list">
           {% for item in relatedItems %}
-          <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+          <li><a href="{{ item.url | url }}">{{ item.data.title }}</a></li>
           {% endfor %}
         </ul>
       </section>
@@ -41,12 +41,12 @@ layout: layouts/base.njk
       <nav class="text-nav" aria-label="Navegación entre textos">
         <span class="text-nav-prev">
           {% if prev %}
-          <a href="{{ prev.url }}">&larr; {{ prev.data.title }}</a>
+          <a href="{{ prev.url | url }}">&larr; {{ prev.data.title }}</a>
           {% endif %}
         </span>
         <span class="text-nav-next">
           {% if next %}
-          <a href="{{ next.url }}">{{ next.data.title }} &rarr;</a>
+          <a href="{{ next.url | url }}">{{ next.data.title }} &rarr;</a>
           {% endif %}
         </span>
       </nav>

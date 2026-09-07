@@ -12,27 +12,38 @@ permalink: /archivo/
       <p class="archivo-count">{{ collections.textos.length }} textos</p>
     </div>
     <div class="archivo-controls">
-      <button type="button" class="text-button archive-sort is-active" data-sort-mode="recientes">recientes</button>
-      <button type="button" class="text-button archive-sort" data-sort-mode="antiguos">antiguos</button>
-      <button type="button" class="text-button archive-sort" data-sort-mode="az">a-z</button>
+      <button type="button" class="text-button archive-sort is-active" data-sort-mode="recientes" data-sort-label="recientes" aria-sort="descending">recientes</button>
+      <button type="button" class="text-button archive-sort" data-sort-mode="antiguos" data-sort-label="antiguos">antiguos</button>
+      <button type="button" class="text-button archive-sort" data-sort-mode="az" data-sort-label="a-z">a-z</button>
     </div>
   </header>
 
   <div class="archivo-list" id="archivo-list">
     {% set currentYear = "" %}
+    {% set currentMonth = "" %}
     {% for item in collections.textos %}
       {% set itemYear = item.date | yearOf %}
+      {% set itemMonth = item.date | monthKey %}
       {% if itemYear != currentYear %}
         {% set currentYear = itemYear %}
+        {% set currentMonth = "" %}
         <h2 class="archivo-year" data-year-heading="{{ itemYear }}">{{ itemYear }}</h2>
+      {% endif %}
+      {% if itemMonth != currentMonth %}
+        {% set currentMonth = itemMonth %}
+        <h3 class="archivo-month" data-month-heading="{{ itemMonth }}">{{ item.date | formatMonthLabel }}</h3>
       {% endif %}
       <div class="archivo-entry"
            data-date="{{ item.date | formatDateIso }}"
            data-title="{{ item.data.title | lower }}"
-           data-year="{{ itemYear }}">
-        <span class="archivo-id">{{ item.data.id }}</span>
-        <time class="archivo-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
-        <a class="archivo-title" href="{{ item.url }}">{{ item.data.title }}</a>
+           data-year="{{ itemYear }}"
+           data-month="{{ itemMonth }}">
+        <div class="archivo-entry-meta">
+          <span class="archivo-id">{{ item.data.id }}</span>
+          <span class="archivo-sep" aria-hidden="true"> · </span>
+          <time class="archivo-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
+        </div>
+        <a class="archivo-title" href="{{ item.url | url }}">{{ item.data.title }}</a>
       </div>
     {% endfor %}
   </div>

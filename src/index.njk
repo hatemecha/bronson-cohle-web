@@ -6,7 +6,7 @@ permalink: /
 ---
 
 <div class="home">
-  <div class="home-table">
+    <div class="home-table">
     <div class="home-year-row">
       <p class="home-year">{{ site.year }}</p>
     </div>
@@ -17,7 +17,7 @@ permalink: /
         <time class="meta-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
       </div>
       <div class="home-content">
-        <h2 class="home-item-title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+        <h2 class="home-item-title"><a href="{{ item.url | url }}">{{ item.data.title }}</a></h2>
         <p class="home-item-excerpt">{{ item.templateContent | excerpt }}</p>
       </div>
     </article>

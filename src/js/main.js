@@ -5,7 +5,13 @@
   var FONT_KEY = "bc-font-size";
   var READING_KEY = "bc-reading";
   var root = document.documentElement;
+  var baseUrl = root.getAttribute("data-base-url") || "/";
   var panelOpen = false;
+
+  function withBaseUrl(path) {
+    var normalizedPath = String(path || "").replace(/^\/+/, "");
+    return baseUrl + normalizedPath;
+  }
 
   function getTheme() {
     return root.getAttribute("data-theme") === "light" ? "light" : "dark";
@@ -44,7 +50,10 @@
       localStorage.setItem(READING_KEY, on ? "on" : "off");
     } catch (e) {}
     var btn = document.querySelector(".reading-control");
-    if (btn) btn.classList.toggle("is-active", on);
+    if (btn) {
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
   }
 
   function closePanel() {
@@ -86,19 +95,7 @@
     var readingBtn = document.querySelector(".reading-control");
     if (readingBtn) {
       readingBtn.addEventListener("click", function () {
-        var on = root.getAttribute("data-reading") !== "on";
-        if (on) {
-          setTheme("light");
-          setFontSize("lg");
-        }
-        setReading(on);
-      });
-    }
-
-    var panel = document.getElementById("a11y-panel");
-    if (panel) {
-      panel.addEventListener("click", function (e) {
-        if (e.target.closest(".text-button")) closePanel();
+        setReading(root.getAttribute("data-reading") !== "on");
       });
     }
 
@@ -117,7 +114,7 @@
     });
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closePanel();
+      if (e.key === "Escape" && panelOpen) closePanel();
     });
   }
 
@@ -155,64 +152,122 @@
     var yearHeadings = Array.prototype.slice.call(
       list.querySelectorAll(".archivo-year")
     );
+    var monthHeadings = Array.prototype.slice.call(
+      list.querySelectorAll(".archivo-month")
+    );
+    var yearByKey = {};
+    var monthByKey = {};
 
-    function render(mode) {
+    yearHeadings.forEach(function (heading) {
+      yearByKey[heading.getAttribute("data-year-heading")] = heading;
+    });
+    monthHeadings.forEach(function (heading) {
+      monthByKey[heading.getAttribute("data-month-heading")] = heading;
+    });
+
+    var state = { mode: "date", desc: true };
+
+    function updateButtons() {
+      document.querySelectorAll(".archive-sort").forEach(function (btn) {
+        var btnMode = btn.getAttribute("data-sort-mode");
+        var label = btn.getAttribute("data-sort-label") || btnMode;
+        var active =
+          (state.mode === "date" && btnMode === "recientes" && state.desc) ||
+          (state.mode === "date" && btnMode === "antiguos" && !state.desc) ||
+          (state.mode === "az" && btnMode === "az");
+
+        btn.classList.toggle("is-active", active);
+
+        if (active && btnMode === "az") {
+          btn.textContent = label + (state.desc ? " ↓" : " ↑");
+        } else {
+          btn.textContent = label;
+        }
+
+        if (active) {
+          btn.setAttribute(
+            "aria-sort",
+            state.desc ? "descending" : "ascending"
+          );
+        } else {
+          btn.removeAttribute("aria-sort");
+        }
+      });
+    }
+
+    function render() {
       var sorted = entries.slice();
 
-      if (mode === "recientes") {
+      if (state.mode === "date") {
         sorted.sort(function (a, b) {
-          return b.getAttribute("data-date").localeCompare(
-            a.getAttribute("data-date")
-          );
-        });
-      } else if (mode === "antiguos") {
-        sorted.sort(function (a, b) {
-          return a.getAttribute("data-date").localeCompare(
+          var cmp = a.getAttribute("data-date").localeCompare(
             b.getAttribute("data-date")
           );
+          return state.desc ? -cmp : cmp;
         });
-      } else if (mode === "az") {
+      } else if (state.mode === "az") {
         sorted.sort(function (a, b) {
-          return a.getAttribute("data-title").localeCompare(
+          var cmp = a.getAttribute("data-title").localeCompare(
             b.getAttribute("data-title"),
             "es"
           );
+          return state.desc ? -cmp : cmp;
         });
       }
 
-      yearHeadings.forEach(function (heading) {
-        heading.hidden = mode === "az";
-      });
+      list.replaceChildren();
 
-      sorted.forEach(function (entry) {
-        list.appendChild(entry);
-      });
+      if (state.mode === "az") {
+        sorted.forEach(function (entry) {
+          list.appendChild(entry);
+        });
+      } else {
+        var seenYear = {};
+        var seenMonth = {};
 
-      if (mode !== "az") {
-        var seen = {};
         sorted.forEach(function (entry) {
           var year = entry.getAttribute("data-year");
-          if (!seen[year]) {
-            seen[year] = list.querySelector(
-              '.archivo-year[data-year-heading="' + year + '"]'
-            );
+          var month = entry.getAttribute("data-month");
+
+          if (!seenYear[year] && yearByKey[year]) {
+            seenYear[year] = true;
+            list.appendChild(yearByKey[year]);
           }
-          if (seen[year]) {
-            list.insertBefore(seen[year], entry);
+          if (!seenMonth[month] && monthByKey[month]) {
+            seenMonth[month] = true;
+            list.appendChild(monthByKey[month]);
           }
+          list.appendChild(entry);
         });
       }
+
+      updateButtons();
     }
 
     document.querySelectorAll(".archive-sort").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        document.querySelectorAll(".archive-sort").forEach(function (other) {
-          other.classList.remove("is-active");
-        });
-        btn.classList.add("is-active");
-        render(btn.getAttribute("data-sort-mode"));
+        var btnMode = btn.getAttribute("data-sort-mode");
+
+        if (btnMode === "recientes") {
+          state.mode = "date";
+          state.desc = true;
+        } else if (btnMode === "antiguos") {
+          state.mode = "date";
+          state.desc = false;
+        } else if (btnMode === "az") {
+          if (state.mode === "az") {
+            state.desc = !state.desc;
+          } else {
+            state.mode = "az";
+            state.desc = false;
+          }
+        }
+
+        render();
       });
     });
+
+    render();
   }
 
   function initAzar() {
@@ -239,20 +294,44 @@
     if (!input || !results) return;
 
     var pagefindReady = false;
+    var pagefindLoading = false;
+    var pagefindModule = null;
     var timer;
 
-    import("/pagefind/pagefind.js")
-      .then(function (module) {
-        pagefindReady = true;
-        return module.default.init();
-      })
-      .catch(function () {
-        if (status) {
-          status.hidden = false;
-          status.textContent =
-            "El índice de búsqueda no está disponible. Ejecutá npm run build.";
-        }
-      });
+    function showStatus(message) {
+      if (!status) return;
+      status.hidden = false;
+      status.textContent = message;
+    }
+
+    function hideStatus() {
+      if (status) status.hidden = true;
+    }
+
+    function loadPagefind() {
+      if (pagefindReady || pagefindLoading) return;
+      pagefindLoading = true;
+      showStatus("Preparando búsqueda…");
+
+      import(withBaseUrl("pagefind/pagefind.js"))
+        .then(function (module) {
+          pagefindModule = module;
+          return module.init();
+        })
+        .then(function () {
+          pagefindReady = true;
+          hideStatus();
+          if (input.value.trim()) runSearch(input.value.trim());
+        })
+        .catch(function () {
+          showStatus("La búsqueda no está disponible por el momento.");
+        })
+        .finally(function () {
+          pagefindLoading = false;
+        });
+    }
+
+    loadPagefind();
 
     input.addEventListener("input", function () {
       window.clearTimeout(timer);
@@ -265,30 +344,30 @@
       results.innerHTML = "";
 
       if (!query) {
-        if (status) status.hidden = true;
+        hideStatus();
         return;
       }
 
       if (!pagefindReady) {
-        if (status) {
-          status.hidden = false;
-          status.textContent = "Buscando…";
-        }
+        if (!pagefindLoading) loadPagefind();
+        else showStatus("Preparando búsqueda…");
         return;
       }
 
-      import("/pagefind/pagefind.js")
-        .then(function (module) {
-          return module.default.search(query);
-        })
+      if (!pagefindModule) {
+        showStatus("Preparando búsqueda…");
+        return;
+      }
+
+      showStatus("Buscando…");
+
+      pagefindModule
+        .search(query)
         .then(function (response) {
-          if (status) status.hidden = true;
+          hideStatus();
 
           if (!response || !response.results.length) {
-            if (status) {
-              status.hidden = false;
-              status.textContent = "Sin resultados.";
-            }
+            showStatus("Sin resultados para esa búsqueda.");
             return;
           }
 
@@ -304,7 +383,9 @@
           items.forEach(function (item) {
             var li = document.createElement("li");
             var link = document.createElement("a");
-            link.href = item.url;
+            link.href = item.url.indexOf(baseUrl) === 0
+              ? item.url
+              : withBaseUrl(item.url);
             link.innerHTML =
               '<span class="search-result-title">' +
               item.meta.title +
@@ -315,6 +396,9 @@
             li.appendChild(link);
             results.appendChild(li);
           });
+        })
+        .catch(function () {
+          showStatus("No se pudo completar la búsqueda.");
         });
     }
   }

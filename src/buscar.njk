@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: "Buscar"
+description: "Buscar en los textos."
+permalink: /buscar/
+---
+
+<div class="buscar reading">
+  <header class="page-header">
+    <h1 class="page-title">Buscar</h1>
+  </header>
+
+  <form class="search-form" role="search" data-pagefind-ignore>
+    <label class="search-label" for="search-input">&gt;</label>
+    <input
+      type="search"
+      id="search-input"
+      class="search-input"
+      name="q"
+      autocomplete="off"
+      spellcheck="false"
+      aria-label="Buscar textos"
+    >
+  </form>
+
+  <p class="search-status" id="search-status" hidden></p>
+  <ul class="search-results" id="search-results" aria-live="polite"></ul>
+</div>

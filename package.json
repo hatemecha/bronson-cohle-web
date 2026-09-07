@@ -1,0 +1,15 @@
+{
+  "name": "bronson-cohle-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "pagefind": "^1.3.0"
+  }
+}

@@ -1,0 +1,52 @@
+---
+layout: layouts/base.njk
+---
+<article class="texto reading">
+  <header class="texto-header">
+    <p class="meta-line">
+      <span class="meta-id">{{ id }}</span>
+      <time class="meta-date" datetime="{{ date | formatDateIso }}">{{ date | formatDateShort }}</time>
+    </p>
+    <h1 class="texto-title">{{ title }}</h1>
+  </header>
+
+  <div class="texto-body" data-pagefind-body>
+    {{ content | safe }}
+  </div>
+
+  <footer class="texto-footer">
+    <p class="share-line">
+      <button type="button" class="text-button share-button" data-share="{{ page.url | url | absoluteUrl(site.url) }}">compartir</button>
+    </p>
+
+    {% set relatedItems = related | resolveRelated(collections) %}
+    {% if relatedItems.length %}
+    <hr class="rule">
+    <section class="related" aria-labelledby="otros-textos">
+      <h2 id="otros-textos" class="section-label">Otros textos</h2>
+      <ul class="related-list">
+        {% for item in relatedItems %}
+        <li><a href="{{ item.url }}">{{ item.data.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% set prev = page | prevTexto(collections) %}
+    {% set next = page | nextTexto(collections) %}
+    {% if prev or next %}
+    <nav class="text-nav" aria-label="Navegación entre textos">
+      <span class="text-nav-prev">
+        {% if prev %}
+        <a href="{{ prev.url }}">← {{ prev.data.title }}</a>
+        {% endif %}
+      </span>
+      <span class="text-nav-next">
+        {% if next %}
+        <a href="{{ next.url }}">{{ next.data.title }} →</a>
+        {% endif %}
+      </span>
+    </nav>
+    {% endif %}
+  </footer>
+</article>

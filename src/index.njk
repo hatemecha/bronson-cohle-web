@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+title: "Textos"
+description: "Textos de Bronson-Cohle."
+permalink: /
+---
+
+<div class="home reading">
+  <header class="home-header">
+    <p class="home-intro">Textos de Bronson-Cohle.<br>{{ site.year }}—</p>
+  </header>
+
+  <div class="home-list">
+    {% for item in collections.textos %}
+    <article class="home-item">
+      {% if not loop.first %}<hr class="rule">{% endif %}
+      <p class="meta-line">
+        <span class="meta-id">{{ item.data.id }}</span>
+        <time class="meta-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateHome }}</time>
+      </p>
+      <h2 class="home-item-title"><a href="{{ item.url }}">{{ item.data.title }}</a></h2>
+      <p class="home-item-excerpt">{{ item.templateContent | excerpt }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</div>

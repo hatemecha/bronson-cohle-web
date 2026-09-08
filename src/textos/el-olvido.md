@@ -4,8 +4,8 @@ date: 2026-08-01
 id: "BC-0003"
 image:
   alt: "Manos sosteniendo un cigarrillo, en blanco y negro."
-  width: 3648
-  height: 2432
+  width: 1600
+  height: 1067
 related:
   - trabajo-a-temprana-edad
   - tatuajes

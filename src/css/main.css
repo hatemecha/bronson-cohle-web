@@ -1078,17 +1078,6 @@ html[data-reading="on"] .texto-body p:last-child {
   .reading {
     max-width: none;
   }
-
-  .site-footer-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-sm);
-  }
-
-  .site-footer-inner a:first-child,
-  .site-footer-inner a:nth-child(2),
-  .footer-credit {
-    justify-self: start;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

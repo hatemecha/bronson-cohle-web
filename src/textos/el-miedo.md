@@ -4,8 +4,8 @@ date: 2026-07-29
 id: "BC-0001"
 image:
   alt: "el miedo."
-  width: 4824
-  height: 3216
+  width: 1600
+  height: 1067
 ---
 
 ¿A qué le tengo miedo?

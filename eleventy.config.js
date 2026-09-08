@@ -36,6 +36,8 @@ export default function (eleventyConfig) {
     "src/js": "js",
     "src/fonts": "fonts",
     "src/images": "images",
+    "src/favicon.png": "favicon.png",
+    "src/apple-touch-icon.png": "apple-touch-icon.png",
     "src/.nojekyll": ".nojekyll",
   });
   eleventyConfig.setServerPassthroughCopyBehavior("copy");
@@ -118,7 +120,7 @@ export default function (eleventyConfig) {
 
   function textoImageFilename(value, slug) {
     const file = String(value);
-    return file.includes(".") ? file : `${file}.png`;
+    return file.includes(".") ? file : `${file}.webp`;
   }
 
   eleventyConfig.addFilter("resolveTextoImage", (image, slug) => {
@@ -130,11 +132,11 @@ export default function (eleventyConfig) {
     let height;
 
     if (typeof image === "boolean") {
-      file = `${slug}.png`;
+      file = `${slug}.webp`;
     } else if (typeof image === "string") {
       file = textoImageFilename(image, slug);
     } else if (typeof image === "object") {
-      file = image.file ? textoImageFilename(image.file, slug) : `${slug}.png`;
+      file = image.file ? textoImageFilename(image.file, slug) : `${slug}.webp`;
       alt = image.alt || "";
       width = image.width;
       height = image.height;

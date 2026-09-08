@@ -20,7 +20,7 @@ npm run dev
 
 Servidor local: `http://localhost:8080`.
 
-La búsqueda usa Pagefind y solo existe después de un build completo (`npm run build`). `npm run dev` no reindexa en cada cambio.
+`npm run build` genera `dist/` e indexa Pagefind. `npm run dev` no reindexa Pagefind en cada cambio: solo sirve el sitio con recarga automática (la búsqueda aparece tras un build completo).
 
 Para un fork, cambiá `src/_data/site.json` (`url`, `github`, nombre, autor) y `PATH_PREFIX` en `.github/workflows/pages.yml`.
 
@@ -30,7 +30,7 @@ Para un fork, cambiá `src/_data/site.json` (`url`, `github`, nombre, autor) y `
 npm run check
 ```
 
-Genera `dist/`, indexa Pagefind y comprueba los archivos necesarios para publicar.
+Valida el frontmatter de los textos (title, id, fechas, related, imágenes), genera `dist/`, indexa Pagefind y comprueba los archivos y enlaces locales necesarios para publicar.
 
 Para reproducir el build de GitHub Pages en PowerShell:
 
@@ -39,6 +39,12 @@ $env:PATH_PREFIX = "/bronson-cohle-web/"
 npm run check
 Remove-Item Env:PATH_PREFIX
 ```
+
+## Imágenes
+
+`npm run optimize:images` convierte los PNG de contenido (`src/images/` y `src/images/textos/`) a WebP y regenera los assets derivados del icono maestro (`favicon.png`): favicon 32px, apple-touch-icon 180px, `src/images/og.png` y `src/images/home-mark.png`.
+
+Los PNG originales se conservan. Si querés eliminarlos después de convertir, corré `npm run optimize:images -- --delete-original`.
 
 ## Publicación
 
@@ -71,5 +77,7 @@ Un issue o un PR chico por un error del sitio (build, enlace, accesibilidad) est
 El código original está bajo [MIT](LICENSE).
 
 Los textos en `src/textos/` son © Bronson Cohle. Todos los derechos reservados: se pueden leer acá; no se pueden republicar ni adaptar sin permiso.
+
+Las imágenes en `src/images/` (y el icono maestro `favicon.png`) son © Bronson Cohle. Todos los derechos reservados.
 
 Las fuentes en `src/fonts/` siguen la [SIL Open Font License 1.1](src/fonts/OFL.txt).

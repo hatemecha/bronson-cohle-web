@@ -31,7 +31,6 @@
   --shell-max: 68rem;
   --shell-pad-inline: clamp(1.125rem, 4vw, 2.5rem);
   --measure: 65ch;
-  --excerpt-measure: 62ch;
   --reading-measure: 60ch;
   --col-meta: clamp(7.25rem, 10vw, 9.5rem);
   --col-id: 5.75rem;
@@ -190,8 +189,7 @@ input:focus-visible {
 }
 
 .page-title,
-.texto-title,
-.home-item-title {
+.texto-title {
   text-wrap: balance;
 }
 
@@ -228,7 +226,6 @@ input:focus-visible {
   padding-block: var(--space-lg) var(--space-xl);
 }
 
-.main:has(.home-table),
 .main:has(.archivo) {
   padding-top: 0;
 }
@@ -1092,6 +1089,10 @@ html[data-reading="on"] .texto-body p:last-child {
   border-bottom-color: var(--foreground);
 }
 
+.search-input:focus-visible {
+  outline: none;
+}
+
 .search-label {
   font-family: var(--font-mono);
   color: var(--muted);
@@ -1112,6 +1113,28 @@ html[data-reading="on"] .texto-body p:last-child {
 .search-input::placeholder {
   color: var(--muted);
   opacity: 1;
+}
+
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin-left: var(--space-xs);
+  cursor: pointer;
+  background-color: var(--muted);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' stroke='black' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' stroke='black' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.search-input::-webkit-search-cancel-button:hover {
+  background-color: var(--foreground);
 }
 
 .search-status {

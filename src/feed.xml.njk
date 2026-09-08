@@ -10,17 +10,15 @@ eleventyExcludeFromCollections: true
     <atom:link href="{{ '/feed.xml' | absoluteUrl(site.url) }}" rel="self" type="application/rss+xml"/>
     <description>{{ site.description | xmlEscape }}</description>
     <language>es</language>
-    <managingEditor>{{ site.author | xmlEscape }}</managingEditor>
-    <webMaster>{{ site.author | xmlEscape }}</webMaster>
     {% if collections.textos[0] %}
-    <lastBuildDate>{{ collections.textos[0].date | formatDateRfc822 }}</lastBuildDate>
+    <lastBuildDate>{{ collections.textos[0] | publishedDate | formatDateRfc822 }}</lastBuildDate>
     {% endif %}
     {% for item in collections.textos %}
     <item>
       <title>{{ item.data.title | xmlEscape }}</title>
       <link>{{ item.url | absoluteUrl(site.url) }}</link>
       <guid isPermaLink="true">{{ item.url | absoluteUrl(site.url) }}</guid>
-      <pubDate>{{ item.date | formatDateRfc822 }}</pubDate>
+      <pubDate>{{ item | publishedDate | formatDateRfc822 }}</pubDate>
       <description>{{ item.templateContent | stripHtml | excerpt(300) | xmlEscape }}</description>
     </item>
     {% endfor %}

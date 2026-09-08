@@ -1,6 +1,6 @@
 {
   "name": "bronson-cohle-web",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "private": true,
   "description": "Sitio estático de textos personales.",
   "license": "SEE LICENSE IN LICENSE",
@@ -14,10 +14,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "eleventy",
+    "build": "eleventy && npx pagefind --site dist",
+    "validate": "node scripts/validate-content.mjs",
     "optimize:images": "node scripts/optimize-images.mjs",
     "verify": "node scripts/verify-build.mjs",
-    "check": "npm run build && npm run verify",
+    "check": "npm run validate && npm run build && npm run verify",
     "dev": "eleventy --serve",
     "start": "npm run dev"
   },

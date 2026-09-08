@@ -1,5 +1,3 @@
-import { execSync } from "node:child_process";
-
 const pathPrefix = process.env.PATH_PREFIX || "/";
 
 const MONTHS_ES = [
@@ -32,7 +30,6 @@ function compareTextos(a, b) {
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
-    "favicon.png": "images/home-mark.png",
     "src/css": "css",
     "src/js": "js",
     "src/fonts": "fonts",
@@ -44,10 +41,6 @@ export default function (eleventyConfig) {
   eleventyConfig.setServerPassthroughCopyBehavior("copy");
   eleventyConfig.addWatchTarget("src/css/");
   eleventyConfig.addWatchTarget("src/js/");
-
-  eleventyConfig.on("eleventy.after", () => {
-    execSync("npx pagefind --site dist", { stdio: "inherit" });
-  });
 
   eleventyConfig.addCollection("textos", (collectionApi) => {
     return collectionApi
@@ -66,18 +59,18 @@ export default function (eleventyConfig) {
     return `${pad(day)}.${pad(month + 1)}.${year}`;
   });
 
-  eleventyConfig.addFilter("formatDateHome", (value) => {
-    const { day, month, year } = dateParts(value);
-    return `${pad(day)} ${MONTHS_ES[month]} ${year}`;
-  });
-
-  eleventyConfig.addFilter("formatDateArchive", (value) => {
-    const { day, month } = dateParts(value);
-    return `${pad(day)}.${pad(month + 1)}`;
-  });
-
   eleventyConfig.addFilter("formatDateRfc822", (value) => {
     return toDate(value).toUTCString();
+  });
+
+  eleventyConfig.addFilter("publishedDate", (item) => {
+    const published = item.data && item.data.published;
+    return toDate(published || item.date);
+  });
+
+  eleventyConfig.addFilter("lastModifiedDate", (item) => {
+    const data = item.data || {};
+    return toDate(data.updated || data.published || item.date);
   });
 
   eleventyConfig.addFilter("formatDateIso", (value) => {
@@ -105,6 +98,16 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("excerpt", (content, length = 140) => {
     const text = String(content).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const match = text.match(/^(.+?[.!?])(?:\s|$)/);
+    const first = match ? match[1] : text;
+    if (first.length <= length) return first;
+    return `${text.slice(0, length).replace(/\s+\S*$/, "")}…`;
+  });
+
+  eleventyConfig.addFilter("bodyExcerpt", (content, length = 160) => {
+    const bodyMatch = String(content).match(/<div class="texto-body"[^>]*>([\s\S]*?)<\/div>/);
+    const body = bodyMatch ? bodyMatch[1] : String(content);
+    const text = body.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
     const match = text.match(/^(.+?[.!?])(?:\s|$)/);
     const first = match ? match[1] : text;
     if (first.length <= length) return first;

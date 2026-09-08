@@ -13,7 +13,7 @@ eleventyExcludeFromCollections: true
   {% for item in collections.textos %}
   <url>
     <loc>{{ item.url | absoluteUrl(site.url) }}</loc>
-    <lastmod>{{ item.date | formatDateIso }}</lastmod>
+    <lastmod>{{ item | lastModifiedDate | formatDateIso }}</lastmod>
   </url>
   {% endfor %}
 </urlset>

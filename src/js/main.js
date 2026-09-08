@@ -189,6 +189,7 @@
           (state.mode === "az" && btnMode === "az");
 
         btn.classList.toggle("is-active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
 
         if (active && btnMode === "az") {
           btn.textContent = label + (state.desc ? " ↓" : " ↑");
@@ -196,14 +197,14 @@
           btn.textContent = label;
         }
 
-        if (active) {
-          btn.setAttribute(
-            "aria-sort",
-            state.desc ? "descending" : "ascending"
-          );
-        } else {
-          btn.removeAttribute("aria-sort");
-        }
+        var directionLabels = {
+          recientes: "Ordenar de más reciente a más antiguo",
+          antiguos: "Ordenar de más antiguo a más reciente",
+          az: state.desc
+            ? "Ordenar alfabéticamente, de Z a A"
+            : "Ordenar alfabéticamente, de A a Z",
+        };
+        btn.setAttribute("aria-label", directionLabels[btnMode] || label);
       });
     }
 
@@ -294,6 +295,9 @@
     }
 
     if (!urls.length) return;
+
+    var status = document.getElementById("azar-status");
+    if (status) status.hidden = false;
 
     var target = urls[Math.floor(Math.random() * urls.length)];
     window.location.replace(target);

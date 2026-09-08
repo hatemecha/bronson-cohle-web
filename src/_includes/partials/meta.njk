@@ -1,9 +1,14 @@
 {% set pageTitle = title | default(site.name) %}
-{% set pageDescription = description | default(site.description) %}
+{% set explicitDescription = description | default(site.description) %}
+{% set pageDescription = explicitDescription %}
+{% if id and explicitDescription == site.description %}
+  {% set pageDescription = content | bodyExcerpt(160) %}
+{% endif %}
 {% set canonicalUrl = page.url | absoluteUrl(site.url) %}
 {% set ogImageUrl = "/images/og.png" | absoluteUrl(site.url) %}
 
 <title>{% if title and page.url != "/" %}{{ title }} - {% endif %}{{ site.name }}</title>
+{% if noindex %}<meta name="robots" content="noindex">{% endif %}
 <meta name="description" content="{{ pageDescription }}">
 <link rel="canonical" href="{{ canonicalUrl }}">
 <link rel="icon" href="{{ '/favicon.png' | url }}" type="image/png" sizes="32x32">

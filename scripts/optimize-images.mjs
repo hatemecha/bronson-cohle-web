@@ -1,10 +1,22 @@
-import { mkdir, readdir, unlink, writeFile } from "node:fs/promises";
+import { access, mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
 const root = path.resolve(".");
 const contentMaxWidth = 1600;
 const contentMaxHeight = 1600;
+const deleteOriginal = process.argv.includes("--delete-original");
+
+const results = [];
+
+async function exists(filePath) {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 async function optimizeContentPng(filePath) {
   const image = sharp(filePath, { failOn: "none" });
@@ -16,6 +28,11 @@ async function optimizeContentPng(filePath) {
   const targetHeight = Math.max(1, Math.round(height * scale));
 
   const outPath = filePath.replace(/\.png$/i, ".webp");
+
+  if (await exists(outPath)) {
+    return { outPath, width, height, skipped: true };
+  }
+
   await image
     .resize({
       width: targetWidth,
@@ -26,11 +43,15 @@ async function optimizeContentPng(filePath) {
     .webp({ quality: 82, effort: 6 })
     .toFile(outPath);
 
-  await unlink(filePath);
+  if (deleteOriginal) {
+    const { unlink } = await import("node:fs/promises");
+    await unlink(filePath);
+  }
+
   return { outPath, width: targetWidth, height: targetHeight };
 }
 
-async function writeFaviconAssets() {
+async function writeMasterAssets() {
   const source = path.join(root, "favicon.png");
   const imagesDir = path.join(root, "src", "images");
   await mkdir(imagesDir, { recursive: true });
@@ -39,6 +60,7 @@ async function writeFaviconAssets() {
     { file: path.join(root, "src", "favicon.png"), size: 32 },
     { file: path.join(root, "src", "apple-touch-icon.png"), size: 180 },
     { file: path.join(imagesDir, "og.png"), size: 1200 },
+    { file: path.join(imagesDir, "home-mark.png"), size: 128 },
   ];
 
   for (const target of targets) {
@@ -49,29 +71,34 @@ async function writeFaviconAssets() {
   }
 }
 
-const textoDir = path.join(root, "src", "images", "textos");
-const results = [];
+const textoTargets = [
+  {
+    kind: "acerca",
+    png: path.join(root, "src", "images", "acerca.png"),
+  },
+  ...(await readdir(path.join(root, "src", "images", "textos")))
+    .filter((name) => name.toLowerCase().endsWith(".png"))
+    .map((name) => ({
+      kind: "texto",
+      png: path.join(root, "src", "images", "textos", name),
+    })),
+];
 
-for (const name of await readdir(textoDir)) {
-  if (!name.toLowerCase().endsWith(".png")) continue;
+for (const target of textoTargets) {
+  if (!(await exists(target.png))) continue;
   results.push({
-    kind: "texto",
-    ...(await optimizeContentPng(path.join(textoDir, name))),
+    kind: target.kind,
+    ...(await optimizeContentPng(target.png)),
   });
 }
 
-const acercaPng = path.join(root, "src", "images", "acerca.png");
-results.push({
-  kind: "acerca",
-  ...(await optimizeContentPng(acercaPng)),
-});
-
-await writeFaviconAssets();
+await writeMasterAssets();
 
 const summary = results.map((item) => ({
   file: path.relative(root, item.outPath).replaceAll("\\", "/"),
   width: item.width,
   height: item.height,
+  skipped: item.skipped || false,
 }));
 
 await writeFile(

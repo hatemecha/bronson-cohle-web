@@ -3,6 +3,7 @@ layout: layouts/base.njk
 title: "Buscar"
 description: "Buscar en los textos."
 permalink: /buscar/
+noindex: true
 ---
 
 <div class="buscar">
@@ -12,7 +13,8 @@ permalink: /buscar/
 
   <div class="buscar-inner reading">
     <form class="search-form" role="search" data-pagefind-ignore>
-      <label class="search-label" for="search-input">&gt;</label>
+      <span class="search-label" aria-hidden="true">&gt;</span>
+      <label class="sr-only" for="search-input">Buscar textos</label>
       <input
         type="search"
         id="search-input"
@@ -21,8 +23,6 @@ permalink: /buscar/
         autocomplete="off"
         spellcheck="false"
         placeholder="Escribí para buscar"
-        aria-label="Buscar textos"
-        autofocus
       >
     </form>
 

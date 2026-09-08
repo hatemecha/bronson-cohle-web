@@ -1,15 +1,21 @@
 [
   {
+    "version": "0.1.3",
+    "date": "2026-09-08",
+    "text": "Optimización",
+    "description": "Optimización del sitio, en especial las imagenes. Y una que otra cosa de SEO."
+  },
+  {
     "version": "0.1.2",
     "date": "2026-09-08",
     "text": "Pulido del sitio",
-    "description": "Nuevo index, pulido de estilos y agregado de una seccion de changelog."
+    "description": "Nuevo index, pulido de estilos y agregado de una sección de changelog."
   },
   {
     "version": "0.1.1",
     "date": "2026-09-08",
     "text": "Primera versión del proyecto.",
-    "description": "Primer lanzamiento en github pages. Como prueba"
+    "description": "Primer lanzamiento en GitHub Pages."
   },
   {
     "version": "0.1.0",

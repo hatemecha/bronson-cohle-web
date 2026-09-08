@@ -3,12 +3,13 @@ layout: layouts/base.njk
 title: "Azar"
 description: "Un texto al azar."
 permalink: /azar/
+noindex: true
 ---
 
 <div class="azar" data-azar-urls='[{% for item in collections.textos %}"{{ item.url | url }}"{% if not loop.last %},{% endif %}{% endfor %}]'>
   <header class="page-header page-header-ruled">
     <h1 class="page-title">Azar</h1>
-    <p class="page-lead" id="azar-status">Elegiendo un texto…</p>
+    <p class="page-lead" id="azar-status" hidden>Elegiendo un texto…</p>
   </header>
   <noscript>
     <p class="page-lead">JavaScript está desactivado. <a href="{{ '/archivo/' | url }}">Ver archivo.</a></p>

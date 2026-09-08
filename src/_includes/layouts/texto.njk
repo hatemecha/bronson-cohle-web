@@ -23,10 +23,11 @@ layout: layouts/base.njk
       {{ content | safe }}
     </div>
 
-    <footer class="texto-footer">
-      <p class="share-line">
-        <button type="button" class="text-button share-button" data-share="{{ page.url | absoluteUrl(site.url) }}">compartir</button>
-      </p>
+    <div class="texto-end">
+      <div class="texto-share">
+        <button type="button" class="text-button share-button" data-share="{{ page.url | absoluteUrl(site.url) }}" aria-describedby="share-status">compartir</button>
+        <span id="share-status" class="sr-only" aria-live="polite"></span>
+      </div>
 
       {% set relatedItems = related | resolveRelated(collections) %}
       {% if relatedItems.length %}
@@ -63,6 +64,6 @@ layout: layouts/base.njk
         </span>
       </nav>
       {% endif %}
-    </footer>
+    </div>
   </div>
 </article>

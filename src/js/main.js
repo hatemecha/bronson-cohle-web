@@ -123,6 +123,17 @@
       btn.addEventListener("click", function () {
         var url = btn.getAttribute("data-share");
         var title = document.title;
+        var status = document.getElementById("share-status");
+
+        function showFeedback(message) {
+          var original = btn.textContent;
+          btn.textContent = message;
+          if (status) status.textContent = message;
+          window.setTimeout(function () {
+            btn.textContent = original;
+            if (status) status.textContent = "";
+          }, 1500);
+        }
 
         if (navigator.share) {
           navigator.share({ title: title, url: url }).catch(function () {});
@@ -131,13 +142,14 @@
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(url).then(function () {
-            var original = btn.textContent;
-            btn.textContent = "copiado";
-            window.setTimeout(function () {
-              btn.textContent = original;
-            }, 1500);
+            showFeedback("copiado");
+          }).catch(function () {
+            showFeedback("no se pudo copiar");
           });
+          return;
         }
+
+        showFeedback("copiá el enlace del navegador");
       });
     });
   }

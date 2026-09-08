@@ -47,12 +47,18 @@ layout: layouts/base.njk
       <nav class="text-nav" aria-label="Navegación entre textos">
         <span class="text-nav-prev">
           {% if prev %}
-          <a href="{{ prev.url | url }}">&larr; {{ prev.data.title }}</a>
+          <a href="{{ prev.url | url }}" class="text-nav-link">
+            <span class="text-nav-arrow" aria-hidden="true">&larr;</span>
+            <span class="text-nav-label">{{ prev.data.title }}</span>
+          </a>
           {% endif %}
         </span>
         <span class="text-nav-next">
           {% if next %}
-          <a href="{{ next.url | url }}">{{ next.data.title }} &rarr;</a>
+          <a href="{{ next.url | url }}" class="text-nav-link">
+            <span class="text-nav-label">{{ next.data.title }}</span>
+            <span class="text-nav-arrow" aria-hidden="true">&rarr;</span>
+          </a>
           {% endif %}
         </span>
       </nav>

@@ -1,7 +1,11 @@
 ---
 title: "El amor"
-date: 2026-08-03
+date: 2026-08-04
 id: "BC-0005"
+image:
+  alt: "Un hombre y una mujer sentados en escaleras al aire libre de noche."
+  width: 1500
+  height: 750
 ---
 
 ¿Qué es el amor?

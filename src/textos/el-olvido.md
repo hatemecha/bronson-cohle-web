@@ -1,7 +1,11 @@
 ---
 title: "El olvido"
-date: 2026-09-06
-id: "BC-0001"
+date: 2026-08-01
+id: "BC-0003"
+image:
+  alt: "Manos sosteniendo un cigarrillo, en blanco y negro."
+  width: 3648
+  height: 2432
 related:
   - trabajo-a-temprana-edad
   - tatuajes

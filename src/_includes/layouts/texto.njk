@@ -13,6 +13,12 @@ layout: layouts/base.njk
       </div>
     </header>
 
+    {% set imageData = image | resolveTextoImage(page.fileSlug) %}
+    {% if imageData %}
+      {% set figureClass = "texto-figure" %}
+      {% include "partials/content-figure.njk" %}
+    {% endif %}
+
     <div class="texto-body" data-pagefind-body>
       {{ content | safe }}
     </div>

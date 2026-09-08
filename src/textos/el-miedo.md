@@ -1,7 +1,11 @@
 ---
 title: "El miedo"
 date: 2026-07-29
-id: "BC-0009"
+id: "BC-0001"
+image:
+  alt: "el miedo."
+  width: 4824
+  height: 3216
 ---
 
 ¿A qué le tengo miedo?

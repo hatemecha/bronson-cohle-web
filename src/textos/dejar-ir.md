@@ -1,7 +1,7 @@
 ---
 title: "Dejar ir"
-date: 2026-08-25
-id: "BC-0004"
+date: 2026-09-03
+id: "BC-0009"
 ---
 
 Dejar ir no es algo que se pueda forzar.

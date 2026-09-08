@@ -1,7 +1,7 @@
 ---
 title: "Hogar"
-date: 2026-08-09
-id: "BC-0008"
+date: 2026-09-04
+id: "BC-0010"
 ---
 
 Para mí, un hogar no ahoga con sus paredes.

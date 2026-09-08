@@ -1,0 +1,11 @@
+{% if imageData %}
+<figure class="content-figure{% if figureClass %} {{ figureClass }}{% endif %}">
+  <img
+    src="{{ imageData.src | url }}"
+    alt="{{ imageData.alt }}"
+    {% if imageData.width and imageData.height %}width="{{ imageData.width }}" height="{{ imageData.height }}"{% endif %}
+    decoding="async"
+    loading="lazy"
+  >
+</figure>
+{% endif %}

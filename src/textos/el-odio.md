@@ -1,7 +1,11 @@
 ---
 title: "El odio"
 date: 2026-07-30
-id: "BC-0010"
+id: "BC-0002"
+image:
+  alt: "Figura en primer plano con el brazo extendido hacia otra persona."
+  width: 786
+  height: 452
 ---
 
 La verdad, quería hablar sobre el odio, pero no sé cómo empezar.

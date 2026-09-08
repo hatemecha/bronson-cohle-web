@@ -1,7 +1,11 @@
 ---
 title: "Tatuajes"
-date: 2026-08-01
-id: "BC-0003"
+date: 2026-07-30
+id: "BC-0004"
+image:
+  alt: "Manos sosteniendo un objeto rectangular con una figura oscura y humo elevándose."
+  width: 5502
+  height: 3666
 related:
   - el-olvido
   - trabajo-a-temprana-edad

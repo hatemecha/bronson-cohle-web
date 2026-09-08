@@ -1,7 +1,7 @@
 ---
 title: "El trabajo a temprana edad"
-date: 2026-09-03
-id: "BC-0002"
+date: 2026-08-05
+id: "BC-0006"
 related:
   - el-olvido
   - tatuajes

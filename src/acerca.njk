@@ -1,16 +1,16 @@
 ---
 layout: layouts/base.njk
-title: "Acerca"
-description: "Acerca."
+title: "Acerca de"
+description: "Acerca de Bronson Cohle."
 permalink: /acerca/
 ---
 
 <div class="acerca">
   <header class="page-header page-header-ruled">
-    <h1 class="page-title">Acerca</h1>
+    <h1 class="page-title">Acerca de</h1>
   </header>
   <div class="acerca-body reading">
-    <p>{{ site.name }} desde septiembre de {{ site.year }}.</p>
+    <!-- <p>{{ site.name }} desde septiembre de {{ site.year }}.</p> -->
   <figure class="content-figure acerca-figure">
     <img
       src="{{ '/images/acerca.webp' | url }}"
@@ -21,6 +21,7 @@ permalink: /acerca/
       loading="eager"
     >
   </figure>
-    <p><i>Mori Somnia Non Memorias.</i></p>
+    <p><i>Mori Somnia Non Memorias</i></p>
+    <p class="acerca-changelog"><a href="{{ '/changelog/' | url }}">Changelog</a></p>
   </div>
 </div>

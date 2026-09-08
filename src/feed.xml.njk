@@ -3,12 +3,15 @@ permalink: /feed.xml
 eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ site.name | xmlEscape }}</title>
     <link>{{ site.url }}/</link>
+    <atom:link href="{{ '/feed.xml' | absoluteUrl(site.url) }}" rel="self" type="application/rss+xml"/>
     <description>{{ site.description | xmlEscape }}</description>
     <language>es</language>
+    <managingEditor>{{ site.author | xmlEscape }}</managingEditor>
+    <webMaster>{{ site.author | xmlEscape }}</webMaster>
     {% if collections.textos[0] %}
     <lastBuildDate>{{ collections.textos[0].date | formatDateRfc822 }}</lastBuildDate>
     {% endif %}

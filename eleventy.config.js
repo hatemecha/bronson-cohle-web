@@ -32,6 +32,7 @@ function compareTextos(a, b) {
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
+    "favicon.png": "images/home-mark.png",
     "src/css": "css",
     "src/js": "js",
     "src/fonts": "fonts",

@@ -1,26 +1,63 @@
 ---
 layout: layouts/base.njk
-title: "Textos"
+title: "Inicio"
 description: "Textos personales."
 permalink: /
 ---
 
 <div class="home">
-    <div class="home-table">
-    <div class="home-year-row">
-      <p class="home-year">{{ site.year }}</p>
-    </div>
-    {% for item in collections.textos %}
-    <article class="home-row">
-      <div class="home-meta">
-        <span class="meta-id">{{ item.data.id }}</span>
-        <time class="meta-date" datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
-      </div>
-      <div class="home-content">
-        <h2 class="home-item-title"><a href="{{ item.url | url }}">{{ item.data.title }}</a></h2>
-        <p class="home-item-excerpt">{{ item.templateContent | excerpt }}</p>
-      </div>
-    </article>
-    {% endfor %}
+  <header class="home-introduction">
+    <img class="home-mark" src="{{ '/images/home-mark.png' | url }}" alt="" width="64" height="64" decoding="async">
+    <h1 class="home-title">{{ site.name }}</h1>
+  </header>
+
+  <div class="home-grid">
+    <section class="home-index" aria-labelledby="home-index-title">
+      <h2 id="home-index-title" class="home-label">
+        <a class="home-label-link" href="{{ '/archivo/' | url }}">Últimos textos</a>
+      </h2>
+      <ol class="home-texts">
+        {% for item in collections.textos %}
+          {% if loop.index <= 3 %}
+            <li>
+              <a href="{{ item.url | url }}">{{ item.data.title }}</a>
+              <time datetime="{{ item.date | formatDateIso }}">{{ item.date | formatDateShort }}</time>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ol>
+      <p class="home-more">
+        <a href="{{ '/archivo/' | url }}"><span class="home-more-mark" aria-hidden="true">+</span> Mostrar más</a>
+      </p>
+    </section>
+
+    <aside class="home-notes" aria-labelledby="home-changelog-title">
+      <section class="home-changelog">
+        <h2 id="home-changelog-title" class="home-label">
+          <a class="home-label-link" href="{{ '/changelog/' | url }}">Changelog</a>
+        </h2>
+        {% for entry in changelog %}
+          {% if loop.index <= 3 %}
+            <div class="home-changelog-meta">
+              <span class="home-changelog-version">v{{ entry.version }}</span>
+              <time datetime="{{ entry.date }}">{{ entry.date | formatDateShort }}</time>
+            </div>
+            <p>{{ entry.text }}</p>
+          {% endif %}
+        {% endfor %}
+      </section>
+    </aside>
   </div>
+
+  <section class="home-explore" aria-labelledby="home-explore-title">
+    <h2 id="home-explore-title" class="home-label">Explorar</h2>
+    <nav class="home-directory" aria-label="Explorar el sitio">
+      <a href="{{ '/archivo/' | url }}">Ver archivo ({{ collections.textos.length }})</a>
+      <a href="{{ '/azar/' | url }}">Leer al azar</a>
+      <a href="{{ '/buscar/' | url }}">Buscar</a>
+    </nav>
+  </section>
+
+  <p class="home-accessibility"><a href="#reading-options" aria-label="Ir a las opciones de lectura">Accesibilidad (Aa)</a>: tamaño del texto, tema y modo de lectura.</p>
+  <p class="home-rss">Suscripción por <a class="home-rss-term" href="https://es.wikipedia.org/wiki/RSS" rel="noopener noreferrer">RSS</a>: <a class="home-rss-feed" href="{{ '/feed.xml' | url }}" type="application/rss+xml">feed.xml</a>.</p>
 </div>

@@ -1,0 +1,20 @@
+[
+  {
+    "version": "0.1.2",
+    "date": "2026-09-08",
+    "text": "Pulido del sitio",
+    "description": "Nuevo index, pulido de estilos y agregado de una seccion de changelog."
+  },
+  {
+    "version": "0.1.1",
+    "date": "2026-09-08",
+    "text": "Primera versión del proyecto.",
+    "description": "Primer lanzamiento en github pages. Como prueba"
+  },
+  {
+    "version": "0.1.0",
+    "date": "2026-09-07",
+    "text": "Inicio del proyecto.",
+    "description": "Inicio del proyecto a modo de prueba."
+  }
+]

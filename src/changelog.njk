@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: "Changelog"
+description: "Historial de cambios del sitio."
+permalink: /changelog/
+eleventyExcludeFromCollections: true
+---
+
+<div class="changelog" data-pagefind-ignore>
+  <header class="page-header page-header-ruled">
+    <h1 class="page-title">Changelog</h1>
+  </header>
+
+  <ol class="changelog-list">
+    {% for entry in changelog %}
+      <li class="changelog-entry">
+        <div class="changelog-meta">
+          <span class="changelog-version">v{{ entry.version }}</span>
+          <time datetime="{{ entry.date }}">{{ entry.date | formatDateShort }}</time>
+        </div>
+        <p class="changelog-summary">{{ entry.text }}</p>
+        {% if entry.description %}
+          <p class="changelog-description">{{ entry.description }}</p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</div>

@@ -2,6 +2,10 @@
 title: "Hogar"
 date: 2026-09-04
 id: "BC-0010"
+image:
+  alt: "Hogar"
+  width: 678
+  height: 452
 ---
 
 Para mí, un hogar no ahoga con sus paredes.

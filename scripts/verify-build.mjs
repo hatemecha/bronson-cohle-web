@@ -14,6 +14,7 @@ const requiredFiles = [
   "changelog/index.html",
   "feed.xml",
   "sitemap.xml",
+  "robots.txt",
   "css/main.css",
   "js/main.js",
   "fonts/source-serif-4-latin-400-normal.woff2",

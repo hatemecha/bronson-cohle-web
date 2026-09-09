@@ -2,6 +2,10 @@
 title: "Recaídas"
 date: 2026-08-13
 id: "BC-0007"
+image:
+  alt: "Recaídas"
+  width: 1024
+  height: 552
 ---
 
 Una recaída es algo «complejo», si se lo puede llamar así.

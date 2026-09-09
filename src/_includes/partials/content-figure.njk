@@ -5,7 +5,12 @@
     alt="{{ imageData.alt }}"
     {% if imageData.width and imageData.height %}width="{{ imageData.width }}" height="{{ imageData.height }}"{% endif %}
     decoding="async"
+    {% if imagePriority %}
+    loading="eager"
+    fetchpriority="high"
+    {% else %}
     loading="lazy"
+    {% endif %}
   >
 </figure>
 {% endif %}

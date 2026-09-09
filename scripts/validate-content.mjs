@@ -18,7 +18,8 @@ async function exists(filePath) {
 }
 
 function frontmatter(content) {
-  const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
+  const normalized = String(content).replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const match = normalized.match(/^---\s*\n([\s\S]*?)\n---/);
   if (!match) return {};
   const body = match[1];
   const data = {};

@@ -2,6 +2,10 @@
 title: "Incertidumbre"
 date: 2026-08-17
 id: "BC-0008"
+image:
+  alt: "Incertidumbre"
+  width: 1599
+  height: 1066
 ---
 
 Camino pensando, como si esas inquietudes pudieran ser calladas con algo tan simple que incluso parece un insulto tratarlo de esa manera.

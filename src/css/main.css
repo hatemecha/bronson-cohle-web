@@ -3,7 +3,8 @@
   src: url("../fonts/source-serif-4-latin-400-normal.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  /* optional: evita el titileo de swap tardío; con preload casi siempre llega a tiempo */
+  font-display: optional;
 }
 
 @font-face {
@@ -11,7 +12,7 @@
   src: url("../fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 
 :root {

@@ -2,6 +2,10 @@
 title: "Dejar ir"
 date: 2026-09-03
 id: "BC-0009"
+image:
+  alt: "Dejar ir"
+  width: 1280
+  height: 720
 ---
 
 Dejar ir no es algo que se pueda forzar.

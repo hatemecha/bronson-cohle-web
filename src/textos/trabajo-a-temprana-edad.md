@@ -2,6 +2,10 @@
 title: "El trabajo a temprana edad"
 date: 2026-08-05
 id: "BC-0006"
+image:
+  alt: "El trabajo a temprana edad"
+  width: 1080
+  height: 567
 related:
   - el-olvido
   - tatuajes

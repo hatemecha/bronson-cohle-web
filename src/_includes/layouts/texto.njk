@@ -16,6 +16,7 @@ layout: layouts/base.njk
     {% set imageData = image | resolveTextoImage(page.fileSlug) %}
     {% if imageData %}
       {% set figureClass = "texto-figure" %}
+      {% set imagePriority = true %}
       {% include "partials/content-figure.njk" %}
     {% endif %}
 

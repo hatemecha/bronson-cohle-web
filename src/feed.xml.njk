@@ -19,7 +19,7 @@ eleventyExcludeFromCollections: true
       <link>{{ item.url | absoluteUrl(site.url) }}</link>
       <guid isPermaLink="true">{{ item.url | absoluteUrl(site.url) }}</guid>
       <pubDate>{{ item | publishedDate | formatDateRfc822 }}</pubDate>
-      <description>{{ item.templateContent | stripHtml | excerpt(300) | xmlEscape }}</description>
+      <description>{{ item.templateContent | bodyExcerpt(300) | xmlEscape }}</description>
     </item>
     {% endfor %}
   </channel>

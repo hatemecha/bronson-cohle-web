@@ -108,10 +108,34 @@ export default function (eleventyConfig) {
     const bodyMatch = String(content).match(/<div class="texto-body"[^>]*>([\s\S]*?)<\/div>/);
     const body = bodyMatch ? bodyMatch[1] : String(content);
     const text = body.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-    const match = text.match(/^(.+?[.!?])(?:\s|$)/);
-    const first = match ? match[1] : text;
-    if (first.length <= length) return first;
-    return `${text.slice(0, length).replace(/\s+\S*$/, "")}…`;
+    if (!text) return "";
+
+    const sentences = [];
+    const sentenceRe = /[^.!?¿¡]+[.!?]+(?:\s|$)|[^.!?¿¡]+$/g;
+    let match;
+    while ((match = sentenceRe.exec(text)) !== null) {
+      const sentence = match[0].trim();
+      if (sentence) sentences.push(sentence);
+    }
+
+    if (!sentences.length) {
+      return `${text.slice(0, length).replace(/\s+\S*$/, "")}…`;
+    }
+
+    // Preferir oraciones completas; si la primera no entra, usar la siguiente corta.
+    const fitting = sentences.filter((sentence) => sentence.length <= length);
+    if (fitting.length) {
+      let excerpt = fitting[0];
+      for (let i = 1; i < fitting.length; i += 1) {
+        const next = `${excerpt} ${fitting[i]}`;
+        if (next.length > length) break;
+        excerpt = next;
+        if (excerpt.length >= Math.min(110, length)) break;
+      }
+      return excerpt;
+    }
+
+    return `${sentences[0].slice(0, length).replace(/\s+\S*$/, "").replace(/[.,;:¿¡]*$/, "")}…`;
   });
 
   eleventyConfig.addFilter("absoluteUrl", (url, base) => {
@@ -184,6 +208,10 @@ export default function (eleventyConfig) {
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  });
+
+  eleventyConfig.addFilter("toJson", (value) => {
+    return JSON.stringify(value);
   });
 
   return {

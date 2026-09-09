@@ -22,6 +22,8 @@
     })();
   </script>
   {% include "partials/meta.njk" %}
+  <link rel="preload" href="{{ '/fonts/source-serif-4-latin-400-normal.woff2' | url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/fonts/ibm-plex-mono-latin-400-normal.woff2' | url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ '/css/main.css' | url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ '/feed.xml' | url }}">
 </head>

@@ -2,7 +2,7 @@
 
 Textos personales. Sitio estático con Eleventy y Pagefind.
 
-Sitio: <https://hatemecha.github.io/bronson-cohle-web/>
+Sitio: <https://bronsoncohle.xyz>
 
 Lo mantiene hatemecha. No es un producto ni un kit para reutilizar los textos.
 
@@ -22,7 +22,7 @@ Servidor local: `http://localhost:8080`.
 
 `npm run build` genera `dist/` e indexa Pagefind. `npm run dev` no reindexa Pagefind en cada cambio: solo sirve el sitio con recarga automática (la búsqueda aparece tras un build completo).
 
-Para un fork, cambiá `src/_data/site.json` (`url`, `github`, nombre, autor) y `PATH_PREFIX` en `.github/workflows/pages.yml`.
+Para un fork, cambiá `src/_data/site.json` (`url`, `github`, nombre, autor), el contenido de `src/CNAME` y, si publicás en un subpath de `*.github.io`, `PATH_PREFIX` en `.github/workflows/pages.yml`.
 
 ## Verificación
 
@@ -32,13 +32,7 @@ npm run check
 
 Valida el frontmatter de los textos (title, id, fechas, related, imágenes), genera `dist/`, indexa Pagefind y comprueba los archivos y enlaces locales necesarios para publicar.
 
-Para reproducir el build de GitHub Pages en PowerShell:
-
-```powershell
-$env:PATH_PREFIX = "/bronson-cohle-web/"
-npm run check
-Remove-Item Env:PATH_PREFIX
-```
+El sitio canónico vive en la raíz del dominio (`PATH_PREFIX` por defecto: `/`).
 
 ## Imágenes
 
@@ -50,13 +44,41 @@ Los PNG originales se conservan. Si querés eliminarlos después de convertir, c
 
 El workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) valida cada pull request y publica cada push a `main`.
 
-Configuración única en GitHub:
+### GitHub Pages
 
 1. **Settings > Pages**
 2. **Build and deployment:** GitHub Actions
-3. Push a `main` y esperar **Build and deploy GitHub Pages**
+3. **Custom domain:** `bronsoncohle.xyz`
+4. Activá **Enforce HTTPS** cuando GitHub lo permita (tras el DNS)
+5. Push a `main` y esperar **Build and deploy GitHub Pages**
 
-No hay secrets ni variables de entorno. Si cambia el nombre del repositorio, actualizá `PATH_PREFIX` en el workflow y `url` en `src/_data/site.json`.
+El archivo `src/CNAME` se copia a `dist/` en el build para que Pages conserve el dominio.
+
+### DNS en Porkbun
+
+En el panel DNS de `bronsoncohle.xyz`:
+
+| Tipo | Host | Respuesta |
+|------|------|-----------|
+| ALIAS | (apex / `@`) | `hatemecha.github.io` |
+| CNAME | `www` | `hatemecha.github.io` |
+
+Si Porkbun no ofrece ALIAS en apex, usá estos registros A (y opcionalmente AAAA):
+
+```
+A     @ → 185.199.108.153
+A     @ → 185.199.109.153
+A     @ → 185.199.110.153
+A     @ → 185.199.111.153
+AAAA  @ → 2606:50c0:8000::153
+AAAA  @ → 2606:50c0:8001::153
+AAAA  @ → 2606:50c0:8002::153
+AAAA  @ → 2606:50c0:8003::153
+```
+
+La propagación puede tardar minutos u horas. Cuando GitHub marque el dominio como verificado, Enforce HTTPS suele activarse solo.
+
+No hay secrets ni variables de entorno. Si cambia el dominio, actualizá `src/_data/site.json` (`url`), `src/CNAME` y la custom domain en Pages.
 
 Rollback: revertir el commit en `main`. El workflow vuelve a publicar. También se puede disparar a mano desde **Actions**.
 

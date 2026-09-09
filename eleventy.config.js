@@ -37,6 +37,7 @@ export default function (eleventyConfig) {
     "src/favicon.png": "favicon.png",
     "src/apple-touch-icon.png": "apple-touch-icon.png",
     "src/.nojekyll": ".nojekyll",
+    "src/CNAME": "CNAME",
   });
   eleventyConfig.setServerPassthroughCopyBehavior("copy");
   eleventyConfig.addWatchTarget("src/css/");

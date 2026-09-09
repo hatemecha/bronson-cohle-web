@@ -5,6 +5,7 @@ const outputDir = path.resolve("dist");
 const expectedPrefix = process.env.PATH_PREFIX || "/";
 const requiredFiles = [
   ".nojekyll",
+  "CNAME",
   "index.html",
   "404.html",
   "archivo/index.html",

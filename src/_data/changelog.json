@@ -1,5 +1,11 @@
 [
   {
+    "version": "0.1.5",
+    "date": "2026-09-08",
+    "text": "Dominio personalizado",
+    "description": "URL canónica y CNAME listos para bronsoncohle.xyz en GitHub Pages (raíz, sin PATH_PREFIX)."
+  },
+  {
     "version": "0.1.4",
     "date": "2026-09-08",
     "text": "Preparación para públicación",

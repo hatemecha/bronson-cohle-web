@@ -27,7 +27,7 @@ Extender tokens en `src/css/main.css`; no inventar un sistema paralelo. Interacc
 - FOUC prevention en `src/_includes/layouts/base.njk`; preferencias en `localStorage` (`bc-theme`, `bc-font-size`, `bc-reading`).
 - **Pagefind** indexa solo `.texto-body`; el resto del chrome lleva `data-pagefind-ignore`.
 - Sin analítica, cookies ni scripts de terceros.
-- URLs siempre con `| url` o `absoluteUrl`, respetando `PATH_PREFIX` en GitHub Pages.
+- URLs siempre con `| url` o `absoluteUrl`. Dominio canónico en raíz (`bronsoncohle.xyz`); `PATH_PREFIX` solo si hace falta un subpath.
 
 ## Changelog (obligatorio al publicar cambios de sitio)
 

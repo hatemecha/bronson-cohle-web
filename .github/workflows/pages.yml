@@ -38,8 +38,6 @@ jobs:
 
       - name: Build and verify
         run: npm run check
-        env:
-          PATH_PREFIX: /bronson-cohle-web/
 
       - name: Configure GitHub Pages
         if: github.event_name != 'pull_request'

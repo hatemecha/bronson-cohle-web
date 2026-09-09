@@ -1196,8 +1196,23 @@ html[data-reading="on"] .texto-body p:last-child {
   }
 
   .site-nav {
-    justify-self: start;
+    justify-self: stretch;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-xs) var(--space-sm);
+  }
+
+  .site-nav a:first-child {
     justify-content: flex-start;
+  }
+
+  .site-nav a:nth-child(2) {
+    justify-content: center;
+  }
+
+  .site-nav a:last-child {
+    justify-content: flex-end;
   }
 
   .a11y {
@@ -1217,11 +1232,6 @@ html[data-reading="on"] .texto-body p:last-child {
     grid-template-areas:
       "name controls"
       "nav nav";
-  }
-
-  .site-nav {
-    justify-self: start;
-    gap: var(--space-xs) var(--space-sm);
   }
 
   .a11y {

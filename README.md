@@ -4,7 +4,7 @@ Textos personales. Sitio estático con Eleventy y Pagefind.
 
 Sitio: <https://bronsoncohle.xyz>
 
-Lo mantiene hatemecha. No es un producto ni un kit para reutilizar los textos.
+No es un producto ni un kit para reutilizar los textos.
 
 ## Requisitos
 
@@ -22,7 +22,7 @@ Servidor local: `http://localhost:8080`.
 
 `npm run build` genera `dist/` e indexa Pagefind. `npm run dev` no reindexa Pagefind en cada cambio: solo sirve el sitio con recarga automática (la búsqueda aparece tras un build completo).
 
-Para un fork, cambiá `src/_data/site.json` (`url`, `github`, nombre, autor), el contenido de `src/CNAME` y, si publicás en un subpath de `*.github.io`, `PATH_PREFIX` en `.github/workflows/pages.yml`.
+Para un fork, cambiá `src/_data/site.json` (`url`, nombre, autor), el contenido de `src/CNAME` y, si publicás en un subpath de `*.github.io`, `PATH_PREFIX` en `.github/workflows/pages.yml`.
 
 ## Verificación
 
@@ -56,14 +56,7 @@ El archivo `src/CNAME` se copia a `dist/` en el build para que Pages conserve el
 
 ### DNS en Porkbun
 
-En el panel DNS de `bronsoncohle.xyz`:
-
-| Tipo | Host | Respuesta |
-|------|------|-----------|
-| ALIAS | (apex / `@`) | `hatemecha.github.io` |
-| CNAME | `www` | `hatemecha.github.io` |
-
-Si Porkbun no ofrece ALIAS en apex, usá estos registros A (y opcionalmente AAAA):
+En el panel DNS de `bronsoncohle.xyz`, apuntá el apex y `www` a GitHub Pages. Preferí registros A/AAAA en apex (y CNAME de `www` al apex o al host de Pages que indique GitHub):
 
 ```
 A     @ → 185.199.108.153

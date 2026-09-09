@@ -1,14 +1,10 @@
 {
   "name": "bronson-cohle-web",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "private": true,
   "description": "Sitio estático de textos personales.",
   "license": "SEE LICENSE IN LICENSE",
-  "author": "hatemecha",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hatemecha/bronson-cohle-web.git"
-  },
+  "author": "Bronson Cohle",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -395,9 +395,10 @@ input:focus-visible {
 }
 
 .site-footer-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: baseline;
+  gap: var(--space-md);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--muted);
@@ -411,26 +412,6 @@ input:focus-visible {
 }
 
 .site-footer-inner a:hover {
-  text-decoration: underline;
-}
-
-.site-footer-inner a:first-child {
-  justify-self: start;
-}
-
-.site-footer-inner a:nth-child(2) {
-  justify-self: center;
-}
-
-.footer-credit {
-  justify-self: end;
-  padding-block: 0.45rem;
-  margin-block: -0.45rem;
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.footer-credit:hover {
   text-decoration: underline;
 }
 

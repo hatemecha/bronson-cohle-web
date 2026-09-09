@@ -1,6 +1,6 @@
 # Bronson Cohle - guía para agentes
 
-Archivo íntimo de textos personales. No es un producto ni un kit para reutilizar los textos. Código bajo MIT; textos en `src/textos/` © Bronson Cohle, todos los derechos reservados. Idioma del sitio: español rioplatense (voseo en UI y documentación).
+Archivo textos personales. No es un producto ni un kit para reutilizar los textos. Código bajo MIT; textos en `src/textos/` © Bronson Cohle, todos los derechos reservados. Idioma del sitio: español rioplatense (voseo en UI y documentación).
 
 ## Límites del agente
 

@@ -1,5 +1,11 @@
 [
   {
+    "version": "1.0.1",
+    "date": "2026-09-11",
+    "text": "Espaciado de imagen en textos",
+    "description": "Correccion de un pequeño detalle en el espaciado de las imagenes y de paso nuevos textos."
+  },
+  {
     "version": "1.0.0",
     "date": "2026-09-09",
     "text": "¡Lanzamiento!",

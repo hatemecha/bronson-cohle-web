@@ -840,16 +840,10 @@ input:focus-visible {
   width: 100%;
   min-width: 0;
   margin: 0;
-  padding: var(--space-lg) 0 0;
 }
 
 .texto-figure + .texto-body {
   padding-top: var(--space-lg);
-}
-
-html[data-reading="on"] .texto-figure {
-  max-width: var(--reading-measure);
-  margin-inline: auto;
 }
 
 .texto-body,
@@ -969,6 +963,11 @@ html[data-reading="on"] .texto-body p:last-child {
 .content-figure {
   margin: 0;
   padding: 0;
+}
+
+/* Misma distancia título→línea y línea→imagen; el padding de .content-figure no puede ganarle. */
+.content-figure.texto-figure {
+  padding-top: var(--space-md);
 }
 
 .content-figure img {
@@ -1291,6 +1290,10 @@ html[data-reading="on"] .texto-body p:last-child {
   .texto-title-block {
     padding: var(--space-sm) 0 var(--row-pad);
     border-bottom: var(--border-width) solid var(--border);
+  }
+
+  .content-figure.texto-figure {
+    padding-top: var(--row-pad);
   }
 
   .texto-body,

@@ -1,7 +1,6 @@
 ---
 layout: layouts/base.njk
 title: "Inicio"
-description: "Archivo de textos personales."
 permalink: /
 ---
 
@@ -10,6 +9,7 @@ permalink: /
     <img class="home-mark" src="{{ '/images/home-mark.png' | url }}" alt="" width="64" height="64" decoding="async">
     <h1 class="home-title">{{ site.name }}</h1>
   </header>
+  <p class="home-lead">{{ site.description }}</p>
 
   <div class="home-grid">
     <section class="home-index" aria-labelledby="home-index-title">
@@ -31,7 +31,7 @@ permalink: /
       </p>
     </section>
 
-    <aside class="home-notes" aria-labelledby="home-changelog-title">
+    <aside class="home-notes" aria-labelledby="home-changelog-title" data-nosnippet>
       <section class="home-changelog">
         <h2 id="home-changelog-title" class="home-label">
           <a class="home-label-link" href="{{ '/changelog/' | url }}">Changelog</a>

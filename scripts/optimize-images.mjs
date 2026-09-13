@@ -85,8 +85,9 @@ async function writeMasterAssets() {
   const imagesDir = path.join(root, "src", "images");
   await mkdir(imagesDir, { recursive: true });
 
+  // Google Search exige favicon de al menos 48×48 (múltiplos de 48).
   const targets = [
-    { file: path.join(root, "src", "favicon.png"), size: 32 },
+    { file: path.join(root, "src", "favicon.png"), size: 48 },
     { file: path.join(root, "src", "apple-touch-icon.png"), size: 180 },
     { file: path.join(imagesDir, "og.png"), size: 1200 },
     { file: path.join(imagesDir, "home-mark.png"), size: 128 },

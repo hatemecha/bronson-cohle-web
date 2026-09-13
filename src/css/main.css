@@ -507,6 +507,14 @@ input:focus-visible {
   line-height: 1.25;
 }
 
+.home-lead {
+  margin: var(--space-md) 0 0;
+  max-width: var(--measure);
+  color: var(--foreground-soft);
+  font-size: 0.9375em;
+  line-height: 1.5;
+}
+
 .home-explore {
   margin-top: var(--space-lg);
   padding-top: var(--space-md);

@@ -36,7 +36,7 @@ El sitio canónico vive en la raíz del dominio (`PATH_PREFIX` por defecto: `/`)
 
 ## Imágenes
 
-`npm run optimize:images` convierte los PNG de contenido (`src/images/` y `src/images/textos/`) a WebP y regenera los assets derivados del icono maestro (`favicon.png`): favicon 32px, apple-touch-icon 180px, `src/images/og.png` y `src/images/home-mark.png`.
+`npm run optimize:images` convierte los PNG de contenido (`src/images/` y `src/images/textos/`) a WebP y regenera los assets derivados del icono maestro (`favicon.png`): favicon 48px (mínimo que acepta Google Search), apple-touch-icon 180px, `src/images/og.png` y `src/images/home-mark.png`.
 
 Los PNG originales se conservan. Si querés eliminarlos después de convertir, corré `npm run optimize:images -- --delete-original`.
 

@@ -29,16 +29,18 @@ Extender tokens en `src/css/main.css`; no inventar un sistema paralelo. Interacc
 - Sin analítica, cookies ni scripts de terceros.
 - URLs siempre con `| url` o `absoluteUrl`. Dominio canónico en raíz (`bronsoncohle.xyz`); `PATH_PREFIX` solo si hace falta un subpath.
 
-## Changelog (solo código, diseño y configuración)
+## Changelog (solo si cambia el sitio)
 
 `src/_data/changelog.json` registra **cómo cambia el sitio**, no qué se publica en él. Es el registro de la estructura que sostiene los textos, no un feed de contenidos.
 
-Entrada nueva al **inicio** del array, y **únicamente** si el commit toca código, diseño o configuración:
+La prueba es una sola: **¿el commit cambia lo que el sitio es o lo que sirve a un visitante?** Si sí, entrada nueva al **inicio** del array. Si no, no hay entrada.
 
 | Cambio | ¿Entrada? |
 |--------|-----------|
 | Agregar, editar o borrar un texto en `src/textos/` | **No** |
 | Cambiar la imagen o el frontmatter de un texto | **No** |
+| Higiene de repo: `.gitattributes`, `.editorconfig`, `.gitignore` | **No** |
+| Entorno local: git config, shell, perfiles, Node | **No** |
 | Templates, CSS, JS, config de Eleventy, scripts | **Sí** |
 | Rutas nuevas, nav, footer, sitemap | **Sí** |
 | Copy de interfaz, SEO, 404, el changelog mismo | **Sí** |
@@ -95,3 +97,20 @@ Slug = nombre del archivo sin extensión, kebab-case sin tildes. Layout y permal
 ## Verificación
 
 Tras cambios de sitio: `npm run check`. Imágenes nuevas de contenido: `npm run optimize:images`.
+
+## Entorno (Windows)
+
+El harness lanza **Windows PowerShell 5.1**, no pwsh. pwsh 7.6 está instalado y es el shell interactivo por defecto (Windows Terminal), pero el harness sigue entrando por 5.1.
+
+- `npm` funciona en ambas versiones: la política de ejecución es `RemoteSigned` (scope `CurrentUser`). No hace falta `npm.cmd`.
+- El `PSModulePath` de 5.1 se repara solo desde el perfil de `Documents\WindowsPowerShell\profile.ps1`. Si `Get-ExecutionPolicy` o `Get-Acl` fallan con errores de TypeData, es que se saltó el perfil: usar `-NoProfile` es la causa, no la solución.
+- **5.1 tiene un paso de argumentos nativo pésimo**: los mensajes de commit con comillas internas o acentos se parten solos. Para esos, escribir el mensaje a un archivo UTF-8 **sin BOM** y usar `git commit -F`:
+
+  ```powershell
+  [System.IO.File]::WriteAllText("$env:TEMP\m.txt", 'Mensaje con "comillas" y ñ')
+  git commit -F "$env:TEMP\m.txt"
+  ```
+
+  `Set-Content -Encoding utf8` mete BOM y contamina el mensaje. Para mensajes simples en ASCII, `git commit -m` alcanza.
+- Los archivos del repo están en **LF** y así se mantienen (`.gitattributes`); no reintroducir CRLF a mano.
+- Al reescribir un archivo con el tool de edición, el working tree puede quedar en CRLF aunque el índice esté en LF. No es un error: `git status` sigue limpio.

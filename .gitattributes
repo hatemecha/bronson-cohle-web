@@ -1,0 +1,23 @@
+# Declaracion explicita de fin de linea.
+#
+# El repositorio guarda LF en el indice en todas las plataformas. Antes esto
+# dependia de core.autocrlf, que Git for Windows define en
+# C:\Program Files\Git\etc\gitconfig: un ajuste local de la instalacion que
+# no viaja con el repo y diverge en Linux o macOS.
+#
+# `eol=lf` deja el working tree en LF tambien en Windows, asi un editor de
+# Windows no reintroduce CRLF por la puerta de atrás.
+
+* text=auto eol=lf
+
+# Imagenes: no son texto. Nunca hay que tocar sus bytes.
+*.webp -text
+*.png  -text
+*.jpg  -text
+*.jpeg -text
+*.gif  -text
+*.ico  -text
+
+# CSS generado o minificado: se trata como esta, sin normalizar.
+*.min.css -text
+*.min.js  -text

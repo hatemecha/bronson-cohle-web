@@ -1,5 +1,11 @@
 [
   {
+    "version": "1.0.3",
+    "date": "2026-10-02",
+    "text": "Auditoría de dependencias más precisa",
+    "description": "Se actualizó brace-expansion y la auditoría del deploy ignora solo un aviso de braces sin parche, que no llega al build."
+  },
+  {
     "version": "1.0.2",
     "date": "2026-09-13",
     "text": "Snippet y favicon en buscadores",

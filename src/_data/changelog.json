@@ -1,5 +1,11 @@
 [
   {
+    "version": "1.0.4",
+    "date": "2026-10-19",
+    "text": "Actualización de sharp",
+    "description": "Se actualizó sharp a 0.35.5 para cerrar el aviso high de librsvg (CVE-2026-96889)."
+  },
+  {
     "version": "1.0.3",
     "date": "2026-10-02",
     "text": "Auditoría de dependencias más precisa",
